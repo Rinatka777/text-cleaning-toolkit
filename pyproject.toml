@@ -1,0 +1,20 @@
+[project]
+name = "text-cleaning-toolkit"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Private text cleaning toolkit (library + CLI)"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["app", "tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = ["E","F","I","UP","B","ANN"]
+
