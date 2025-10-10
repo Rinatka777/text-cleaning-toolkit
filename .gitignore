@@ -1,0 +1,4 @@
+.venv/
+scripts/
+.idea/
+text_cleaning_toolkit.egg-info/
