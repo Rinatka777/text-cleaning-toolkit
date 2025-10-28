@@ -1,20 +1,34 @@
 [project]
 name = "text-cleaning-toolkit"
 version = "0.1.0"
-requires-python = ">=3.11"
-description = "Private text cleaning toolkit (library + CLI)"
+description = "Private text cleaning toolkit (library + CLI) — stdlib-only."
 readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Sharifullin Rinat"}]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "mypy>=1.8", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-q"
 
 [tool.mypy]
 python_version = "3.11"
 strict = true
+warn_unused_ignores = true
+pretty = true
 packages = ["app", "tests"]
 
 [tool.ruff]
-line-length = 100
 target-version = "py311"
-select = ["E","F","I","UP","B","ANN"]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ANN"]
+per-file-ignores = { "tests/**" = ["ANN"] }
 

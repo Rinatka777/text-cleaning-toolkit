@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 import argparse
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
-from collections.abc import Callable
 Step = Callable[[str], str]
 
 from app.text_cleaner import TextCleaner
@@ -26,7 +27,6 @@ def _load_stopwords(path: Path) -> set[str]:
     return set(words)
 
 def _stopwords_step(sw: set[str]) -> Step:
-    from app.utils import remove_stopwords
     def _step(s: str) -> str:
         return remove_stopwords(s, sw)
     return _step
