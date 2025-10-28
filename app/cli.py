@@ -1,8 +1,10 @@
 from __future__ import annotations
-
 import argparse
 import sys
 from pathlib import Path
+
+from collections.abc import Callable
+Step = Callable[[str], str]
 
 from app.text_cleaner import TextCleaner
 from app.utils import (
@@ -23,6 +25,11 @@ def _load_stopwords(path: Path) -> set[str]:
             words.append(s)
     return set(words)
 
+def _stopwords_step(sw: set[str]) -> Step:
+    from app.utils import remove_stopwords
+    def _step(s: str) -> str:
+        return remove_stopwords(s, sw)
+    return _step
 
 def _build_cleaner(
     no_lower: bool,
@@ -37,11 +44,9 @@ def _build_cleaner(
         c.add_step(strip_punctuation)
     if not no_digits:
         c.add_step(replace_digits)
-    # Always normalize at the end to collapse whitespace and strip edges.
     c.add_step(normalize_whitespace)
     if stopwords_set is not None:
-        # Simple adapter to pass the set into the pure function.
-        c.add_step(lambda s: remove_stopwords(s, stopwords_set))
+        c.add_step(_stopwords_step(stopwords_set))
     return c
 
 
